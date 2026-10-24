@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "django_render_partial" , "rest_framework" , "imagekit" , "django_summernote" , "account_module"
+    "django_render_partial" , "rest_framework" , "imagekit" , "django_summernote" , "account_module","project_module"
 ]
 
 MIDDLEWARE = [
