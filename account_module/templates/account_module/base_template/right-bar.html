@@ -1,0 +1,44 @@
+    <aside class="sidebar" aria-label="نوار کناری">
+      <div class="sidebar__brand" dir="ltr">ASPI PANEL</div>
+      <nav class="nav" aria-label="منوی اصلی">
+        <ul>
+          <li>
+            <a {% if page_active == 'dashboard' %} class="nav__link is-active" {% else %} class="nav__link" {% endif %} href="{% url 'dashboard' %}">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              <span>میز کار</span>
+            </a>
+          </li>
+          <li>
+            <a {% if page_active == 'upload-project' %} class="nav__link is-active" {% else %} class="nav__link" {% endif %} href="{% url 'upload-project' %}" aria-current="page">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>
+              <span>آپلود پروژه</span>
+            </a>
+          </li>
+          <li>
+            <a {% if page_active == 'my-project' %} class="nav__link is-active" {% else %} class="nav__link" {% endif %} href="{% url 'my-projects' %}">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
+              <span>پروژه‌های من</span>
+            </a>
+          </li>
+          <li>
+            <a {% if page_active == 'all-project' %} class="nav__link is-active" {% else %} class="nav__link" {% endif %} href="{% url 'my-projects' %}">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>
+              <span>تمام پروژه ها</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar__user">
+        <div class="user-chip">
+          <span class="avatar" aria-hidden="true">م</span>
+          <span class="user-chip__text">
+            <strong>محمدامین رضایی</strong>
+            <small>طراح ارشد</small>
+          </span>
+        </div>
+        <a class="logout" href="{%  url 'logout-func'  %}">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M16 8l4 4-4 4M20 12H9"/></svg>
+          <span>خروج از حساب</span>
+        </a>
+      </div>
+    </aside>
