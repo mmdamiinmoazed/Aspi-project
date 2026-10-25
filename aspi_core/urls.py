@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("" , views.Home.as_view() , name="home"),
     path("clear-session/" , views.ClearSession.as_view() , name="clear-session"),
-    path("account/panel/" , include("account_module.urls"))
+    path("account/panel/" , include("account_module.urls")),
+    path("project/" , include("project_module.urls"))
 ]
