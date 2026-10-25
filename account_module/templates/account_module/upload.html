@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>آپلود پروژه — ASPI PANEL</title>
+
     {% include 'includes/styles.html' %}
 </head>
 <body>
@@ -84,8 +86,9 @@
                 </div>
 
                 <div class="field">
-                  <label for="due-date">تاریخ تحویل</label>
-                  <input class="input" type="text" id="due-date" name="due_date" placeholder="۱۴۰۵/۰۸/۰۱" dir="ltr" inputmode="numeric">
+                  <label for="due-date">تاریخ تحویل</label>\
+                  {% comment %} Persian calender {% endcomment %}
+                  <input class="input" data-jdp  id="due-date" name="due_date" placeholder="۱۴۰۵/۰۸/۰۱" dir="ltr" inputmode="numeric">
                   <span class="helper">قالب: سال/ماه/روز</span>
                 </div>
               </div>
@@ -116,7 +119,10 @@
       <footer class="footer">ASPI PANEL — نسخه ۱.۰</footer>
     </div>
   </div>
-
+  <script src="{% static 'dist/jalalidatepicker.min.js' %}"></script>
+  <script>
+ jalaliDatepicker.startWatch();
+  </script>
   <script>
     document.getElementById('theme-toggle').addEventListener('click', function () {
       var r = document.documentElement;
