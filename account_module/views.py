@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from . import forms,models
 from django.contrib.auth import get_user_model , login , authenticate  , logout , decorators
 from django.contrib.auth.mixins import LoginRequiredMixin
+import jdatetime
 # Create your views here.
 User = get_user_model()
 class LoginView(generic.View) : 
