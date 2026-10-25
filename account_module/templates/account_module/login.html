@@ -81,6 +81,7 @@
   </div>
 
   <script>
+    {% comment %} Dark mood {% endcomment %}
     document.getElementById('theme-toggle').addEventListener('click', function () {
       var r = document.documentElement;
       r.setAttribute('data-theme', r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');

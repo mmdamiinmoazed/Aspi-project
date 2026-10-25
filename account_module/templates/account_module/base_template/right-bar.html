@@ -32,8 +32,10 @@
         <div class="user-chip">
           <span class="avatar" aria-hidden="true">م</span>
           <span class="user-chip__text">
-            <strong>محمدامین رضایی</strong>
-            <small>طراح ارشد</small>
+            <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+            <small>
+                {{ user.role }}
+            </small>
           </span>
         </div>
         <a class="logout" href="{%  url 'logout-func'  %}">
