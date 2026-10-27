@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>جزئیات پروژه — ASPI PANEL</title>
+
+  {% include 'includes/styles.html' %}
+</head>
+<body>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" tabindex="-1">
+
+  <div class="app">
+   {% include 'account_module/base_template/right-bar.html' %}
+
+    <label for="nav-toggle" class="overlay" aria-hidden="true"></label>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <label for="nav-toggle" class="icon-btn menu-btn" title="باز کردن منو" aria-label="باز کردن منو">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </label>
+        <h1 class="topbar__title">جزئیات پروژه</h1>
+        <div class="topbar__actions">
+          <button type="button" class="icon-btn theme-toggle" id="theme-toggle" aria-label="تغییر پوسته روشن/تیره" title="تغییر پوسته">
+            <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>
+            <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          </button>
+          <span class="avatar" title="محمدامین رضایی" aria-hidden="true">م</span>
+        </div>
+      </header>
+
+      <main class="content">
+        <nav class="breadcrumb" aria-label="مسیر صفحه">
+          <ol>
+            <li><a href="dashboard.html">میز کار</a></li>
+            <li><a href="projects.html">پروژه‌های من</a></li>
+            <li aria-current="page">طراحی اپلیکیشن بانکی</li>
+          </ol>
+        </nav>
+
+        <!-- Project header -->
+        <section class="card panel project-head">
+          <div class="project-head__main">
+            <h2 class="project-head__title">طراحی اپلیکیشن بانکی</h2>
+            <p class="muted">دسته‌بندی: طراحی رابط کاربری — تاریخ ارسال: ۱۴۰۵/۰۷/۳۰ — حجم: ۱۸٫۴ مگابایت</p>
+            <p class="project-head__desc">طراحی کامل رابط کاربری اپلیکیشن بانکی شامل صفحات ورود، داشبورد حساب، انتقال وجه و تاریخچه تراکنش‌ها.</p>
+          </div>
+          <div class="project-head__side">
+            <span class="badge badge--pending">در انتظار بررسی</span>
+            <a class="btn btn--outline btn--sm" href="project-chat.html">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/></svg>
+              <span>گفتگوی تیم</span>
+            </a>
+          </div>
+        </section>
+
+        <div class="detail-grid">
+          <div class="detail-main">
+
+            <!-- Voting & comments -->
+            <section class="card panel" aria-labelledby="vote-title">
+              <div class="panel__head">
+                <h2 id="vote-title" class="panel__title">رأی‌گیری و نظرات</h2>
+              </div>
+
+              <div class="vote" role="group" aria-label="رأی به این پروژه">
+                <button type="button" class="vote__btn" aria-pressed="false" data-vote="up">
+                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H7"/></svg>
+                  <span>موافقم</span>
+                  <strong class="vote__count">۱۴</strong>
+                </button>
+                <button type="button" class="vote__btn" aria-pressed="false" data-vote="down">
+                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 13V4h3v9zM17 13l-4 7a2 2 0 0 1-2-2v-3H5a2 2 0 0 1-2-2l1-7a2 2 0 0 1 2-2h9"/></svg>
+                  <span>مخالفم</span>
+                  <strong class="vote__count">۳</strong>
+                </button>
+              </div>
+
+              <h3 class="sub-title">نظرات اعضا (۴)</h3>
+              <ul class="comments">
+                <li class="comment">
+                  <span class="avatar avatar--sm" aria-hidden="true">س</span>
+                  <div class="comment__body">
+                    <p class="comment__meta"><strong>سارا احمدی</strong> <time class="muted">۲ ساعت پیش</time></p>
+                    <p>چیدمان صفحه انتقال وجه خیلی خوب است. فقط دکمه تأیید باید بزرگ‌تر باشد.</p>
+                  </div>
+                </li>
+                <li class="comment">
+                  <span class="avatar avatar--sm" aria-hidden="true">ع</span>
+                  <div class="comment__body">
+                    <p class="comment__meta"><strong>علی کریمی</strong> <time class="muted">دیروز</time></p>
+                    <p>رنگ‌بندی حالت تیره کنتراست کافی دارد.</p>
+                  </div>
+                </li>
+                <li class="comment">
+                  <span class="avatar avatar--sm" aria-hidden="true">ن</span>
+                  <div class="comment__body">
+                    <p class="comment__meta"><strong>نرگس موسوی</strong> <time class="muted">۲ روز پیش</time></p>
+                    <p>تاریخچه تراکنش‌ها به نظر شلوغ می‌آید. فیلتر تاریخ لازم است.</p>
+                  </div>
+                </li>
+                <li class="comment">
+                  <span class="avatar avatar--sm" aria-hidden="true">ر</span>
+                  <div class="comment__body">
+                    <p class="comment__meta"><strong>رضا تهرانی</strong> <time class="muted">۳ روز پیش</time></p>
+                    <p>نسخه موبایل عالی است.</p>
+                  </div>
+                </li>
+              </ul>
+
+              <form class="form comment-form" novalidate>
+                <div class="field">
+                  <label for="comment">نظر شما</label>
+                  <textarea class="input" id="comment" name="comment" rows="3" maxlength="300" placeholder="نظر خود را درباره این پروژه بنویسید…"></textarea>
+                </div>
+                <div class="actions">
+                  <button type="submit" class="btn btn--sm">ثبت نظر</button>
+                </div>
+              </form>
+            </section>
+
+            <!-- Improvements -->
+            <section class="card panel" aria-labelledby="improve-title">
+              <div class="panel__head">
+                <h2 id="improve-title" class="panel__title">پیشنهادهای بهبود</h2>
+              </div>
+              <ol class="numbered">
+                <li>
+                  <strong>سادگی تاریخچه تراکنش‌ها</strong>
+                  <p class="muted">افزودن فیلتر بازه زمانی و جستجو برای کاهش شلوغی صفحه.</p>
+                </li>
+                <li>
+                  <strong>بزرگ‌تر کردن دکمه‌های اصلی</strong>
+                  <p class="muted">دکمه‌های تأیید و انتقال باید حداقل ۴۴ پیکسل ارتفاع داشته باشند تا در موبایل راحت‌تر لمس شوند.</p>
+                </li>
+                <li>
+                  <strong>بازبینی کنتراست متن‌های کم‌رنگ</strong>
+                  <p class="muted">متن‌های راهنما در حالت تیره باید حداقل نسبت کنتراست ۴٫۵ به ۱ را داشته باشند.</p>
+                </li>
+                <li>
+                  <strong>افزودن حالت خطا برای فرم‌ها</strong>
+                  <p class="muted">پیام‌های خطا برای ورودی‌های نامعتبر در تمام فرم‌های انتقال وجه طراحی شود.</p>
+                </li>
+              </ol>
+            </section>
+          </div>
+
+          <aside class="detail-side">
+
+            <!-- Task checklist -->
+            <section class="card panel" aria-labelledby="tasks-title">
+              <div class="panel__head">
+                <h2 id="tasks-title" class="panel__title">فهرست وظایف</h2>
+                <span class="helper" id="task-progress">۲ از ۵</span>
+              </div>
+              <div class="progress" role="progressbar" aria-label="پیشرفت وظایف" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40">
+                <div class="progress__bar" style="width: 40%"></div>
+              </div>
+              <ul class="tasks">
+                <li>
+                  <input class="check" type="checkbox" id="t1" checked>
+                  <label for="t1">طراحی صفحه ورود</label>
+                </li>
+                <li>
+                  <input class="check" type="checkbox" id="t2" checked>
+                  <label for="t2">طراحی داشبورد حساب</label>
+                </li>
+                <li>
+                  <input class="check" type="checkbox" id="t3">
+                  <label for="t3">طراحی صفحه انتقال وجه</label>
+                </li>
+                <li>
+                  <input class="check" type="checkbox" id="t4">
+                  <label for="t4">بازبینی نسخه موبایل</label>
+                </li>
+                <li>
+                  <input class="check" type="checkbox" id="t5">
+                  <label for="t5">آماده‌سازی فایل‌های نهایی</label>
+                </li>
+              </ul>
+            </section>
+
+            <!-- AI analysis -->
+            <section class="card panel ai" aria-labelledby="ai-title">
+              <div class="panel__head">
+                <h2 id="ai-title" class="panel__title">تحلیل هوش مصنوعی</h2>
+                <span class="badge">AI</span>
+              </div>
+              <p class="ai__lead">هوش مصنوعی، ساختار و محتوای پروژه را بررسی می‌کند و امتیازی از ۱۰۰ به آن می‌دهد.</p>
+
+              <div class="ai__score">
+                <span class="ai__score-value">۷۸</span>
+                <span class="muted">از ۱۰۰</span>
+              </div>
+
+              <dl class="ai__list">
+                <div><dt>خوانایی</dt><dd>۸۵</dd></div>
+                <div><dt>سازگاری با موبایل</dt><dd>۷۰</dd></div>
+                <div><dt>کنتراست و دسترس‌پذیری</dt><dd>۶۵</dd></div>
+                <div><dt>انسجام بصری</dt><dd>۸۸</dd></div>
+              </dl>
+
+              <details class="ai__what">
+                <summary>هوش مصنوعی چیست؟</summary>
+                <p>هوش مصنوعی (AI) به سامانه‌هایی گفته می‌شود که می‌توانند الگوها را در داده‌ها تشخیص دهند و بر اساس آن‌ها تحلیل یا پیشنهاد ارائه کنند. در این بخش، AI طرح را با معیارهای طراحی مقایسه می‌کند و نقاط قوت و ضعف را نشان می‌دهد.</p>
+              </details>
+            </section>
+
+            <!-- Pictures -->
+            <section class="card panel" aria-labelledby="gallery-title">
+              <div class="panel__head">
+                <h2 id="gallery-title" class="panel__title">تصاویر پروژه</h2>
+                <span class="helper">۴ تصویر</span>
+              </div>
+              <ul class="gallery">
+                <li><figure class="gallery__item"><div class="gallery__frame" role="img" aria-label="نمای صفحه ورود"></div><figcaption>صفحه ورود</figcaption></figure></li>
+                <li><figure class="gallery__item"><div class="gallery__frame gallery__frame--alt" role="img" aria-label="نمای داشبورد"></div><figcaption>داشبورد حساب</figcaption></figure></li>
+                <li><figure class="gallery__item"><div class="gallery__frame gallery__frame--dots" role="img" aria-label="نمای انتقال وجه"></div><figcaption>انتقال وجه</figcaption></figure></li>
+                <li><figure class="gallery__item"><div class="gallery__frame gallery__frame--lines" role="img" aria-label="نمای تاریخچه"></div><figcaption>تاریخچه تراکنش</figcaption></figure></li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="footer">ASPI PANEL — نسخه ۱.۰</footer>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle (به همراه ذخیره در حافظه مرورگر)
+    var themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function () {
+        var r = document.documentElement;
+        var nextTheme = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        r.setAttribute('data-theme', nextTheme);
+        try { localStorage.setItem('theme', nextTheme); } catch(e) {}
+      });
+    }
+
+    // Voting: تغییر وضعیت به صورت انحصاری (Mutual Exclusivity)
+    var voteBtns = document.querySelectorAll('.vote__btn');
+    voteBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var isCurrentlyPressed = btn.getAttribute('aria-pressed') === 'true';
+        // در ابتدا تمام دکمه‌ها از حالت فشرده خارج می‌شوند
+        voteBtns.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+        // اگر قبلاً فعال نبوده، فعال می‌شود (Toggle)
+        if (!isCurrentlyPressed) {
+          btn.setAttribute('aria-pressed', 'true');
+        }
+      });
+    });
+
+    // Task progress counter (اصلاح باگ سلکتور و پشتیبانی از ارقام فارسی)
+    var boxes = document.querySelectorAll('.tasks .check');
+    var progressEl = document.querySelector('.progress[role="progressbar"]');
+    var progressBar = progressEl ? progressEl.querySelector('.progress__bar') : null;
+    var taskProgressText = document.getElementById('task-progress');
+
+    function updateTasks() {
+      if (!boxes.length) return;
+      var done = 0;
+      boxes.forEach(function (b) { if (b.checked) done++; });
+      var pct = Math.round((done / boxes.length) * 100);
+
+      // به‌روزرسانی متن با فونت و ارقام فارسی
+      if (taskProgressText) {
+        taskProgressText.textContent = done.toLocaleString('fa-IR') + ' از ' + boxes.length.toLocaleString('fa-IR');
+      }
+
+      // تنظیم مستقیم مشخصه‌های دسترسی‌پذیری و نوار استایل
+      if (progressEl) {
+        progressEl.setAttribute('aria-valuenow', pct);
+      }
+      if (progressBar) {
+        progressBar.style.width = pct + '%';
+      }
+    }
+
+    boxes.forEach(function (b) { b.addEventListener('change', updateTasks); });
+    updateTasks();
+
+    // جلوگیری از رفرش ناخواسته صفحه هنگام ثبت نظر
+    var commentForm = document.querySelector('.comment-form');
+    if (commentForm) {
+      commentForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // در صورت نیاز به ارسال از طریق AJAX اینجا کد مربوطه قرار می‌گیرد
+      });
+    }
+  </script>
+
+</body>
+</html>
