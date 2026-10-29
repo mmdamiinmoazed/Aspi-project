@@ -1,31 +1,13 @@
 from django.shortcuts import render, redirect
-from datetime import datetime , time , date
-from django.utils import timezone
+
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import forms
 from . import models
-from persiantools.jdatetime import JalaliDate
+import jdatetime
 from django.http import HttpResponse
 # Create your views here.
-def convert_time(the_deadline) : 
-        deadline = JalaliDate.strptime(
-            the_deadline , "%Y/%m/%d"
-        )
-        deadline = deadline.to_gregorian()
-        convering_deadline_to_date = date(
-            deadline.year , deadline.month , deadline.day
-        )
-
-
-        final_deadline = datetime.combine(
-            convering_deadline_to_date,time.min
-        )
-        return timezone.make_aware(final_deadline)
-
-
-
 class MyProjectView(LoginRequiredMixin , generic.View) : 
     login_url = reverse_lazy("login-page")
     redirect_field_name = ""
@@ -56,15 +38,20 @@ class UploadProject(LoginRequiredMixin , generic.View) :
 
         if form.is_valid() :
             deadline = request.POST.get("deadline")
-            deadline = convert_time(the_deadline=deadline)
+            # deadline = convert_time(the_deadline=deadline)
             project = form.save(commit=False)
-            print(deadline)
+
+
+            deadline = jdatetime.datetime.strptime(
+                deadline , "%Y/%m/%d"
+            ).date()
+            deadline = deadline.togregorian()
+
             project.deadline = deadline
             project.performer = request.user
             project.save() 
             form.save()
             return redirect("dashboard")
-        # print(form.errors.as_json)
         return render(request , "project_module/upload.html" , context={
              "page_active" : "upload-project" ,"form" : form
         })
@@ -80,8 +67,8 @@ class AllProjectView(LoginRequiredMixin , generic.View) :
     login_url = reverse_lazy("login-page")
     redirect_field_name = ""
     def get(self , request) : 
-        projects = models.Project.objects.all()
-
+        projects = models.Project.objects.all().order_by("-id")
+        
         return render(request , "project_module/all_projects.html" , context={
              "page_active" : "all-project" , "projects" : projects
         })

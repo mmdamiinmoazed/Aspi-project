@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>جزئیات پروژه — ASPI PANEL</title>
-
+ {% load static %}
   {% include 'includes/styles.html' %}
 </head>
 <body>
@@ -252,7 +252,7 @@
           btn.setAttribute('aria-pressed', 'true');
         }
       });
-    });
+    });     
 
     // Task progress counter (اصلاح باگ سلکتور و پشتیبانی از ارقام فارسی)
     var boxes = document.querySelectorAll('.tasks .check');
@@ -292,6 +292,6 @@
       });
     }
   </script>
-
+<script href='{% static 'js/loader.js' %}' ></script>
 </body>
 </html>

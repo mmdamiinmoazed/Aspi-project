@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  {% load static %}
   {% load account_tag %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +10,7 @@
 </head>
 <body>
   <!-- Drawer state (checkbox hack, no JS) -->
-  
+  {% include 'includes/template_loader.html' %}
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" tabindex="-1">
 
   <div class="app">
@@ -137,7 +138,7 @@
       r.setAttribute('data-theme', r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     });
   </script>
-
+<script href='{% static 'js/loader.js' %}' ></script>
 </body>
   
 </html>

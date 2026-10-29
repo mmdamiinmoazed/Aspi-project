@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  {% load project_tags %}
+  {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>پروژه‌های من — ASPI PANEL</title>
@@ -8,6 +10,7 @@
 </head>
 <body>
   <!-- Drawer state (checkbox hack, no JS) -->
+   {% include 'includes/template_loader.html' %}
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" tabindex="-1">
 
   <div class="app">
@@ -75,20 +78,42 @@
               <tr>
                 <th scope="col">عنوان پروژه</th>
                 <th scope="col">دسته‌بندی</th>
+                
                 <th scope="col">تاریخ ارسال</th>
+                <th scope="col">تاریخ تحویل</th>
                 <th scope="col">حجم فایل</th>
                 <th scope="col">وضعیت</th>
                 <th scope="col">عملیات</th>
+               
                 {% comment %} Adding this part and contributer for it  {% endcomment %}
                   {% comment %} <th scope="col">چت پروژه </th> {% endcomment %}
               </tr>
             </thead>
             <tbody>
+              {% for project in projects %}
               <tr>
-                <th scope="row">طراحی اپلیکیشن بانکی</th>
-                <td>طراحی رابط کاربری</td>
-                <td>۱۴۰۵/۰۷/۳۰</td>
-                <td>۱۸٫۴ مگابایت</td>
+                <th scope="row">
+
+                  {{ project.title }}
+
+                </th>
+                <td>
+                  {{ project.category }}
+
+                </td>
+                <td>
+                  {{ project.created_at|date_changer }}
+
+                </td>
+                <td>
+                  {{ project.deadline|date_changer }}
+
+                </td>
+                <td>
+
+                  {{ project.project_file|filesize_filter }} مگابایت
+
+                </td>
                 <td><span class="badge badge--pending">در انتظار بررسی</span></td>
                 <td>
                   <div class="row-actions">
@@ -97,72 +122,8 @@
                   </div>
                 </td>
               </tr>
-              <tr>
-                <th scope="row">سایت شرکتی آسپی</th>
-                <td>توسعه وب</td>
-                <td>۱۴۰۵/۰۷/۲۸</td>
-                <td>۴۲٫۱ مگابایت</td>
-                <td><span class="badge badge--approved">تأیید شده</span></td>
-                <td>
-                  <div class="row-actions">
-                    <a class="icon-btn icon-btn--sm" href="#" title="مشاهده" aria-label="مشاهده پروژه سایت شرکتی آسپی"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a>
-                    <button type="button" class="icon-btn icon-btn--sm" title="حذف" aria-label="حذف پروژه سایت شرکتی آسپی"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">موشن لوگو</th>
-                <td>موشن گرافیک</td>
-                <td>۱۴۰۵/۰۷/۲۷</td>
-                <td>۲۶٫۷ مگابایت</td>
-                <td><span class="badge badge--rejected">رد شده</span></td>
-                <td>
-                  <div class="row-actions">
-                    <a class="icon-btn icon-btn--sm" href="#" title="مشاهده" aria-label="مشاهده پروژه موشن لوگو"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a>
-                    <button type="button" class="icon-btn icon-btn--sm" title="حذف" aria-label="حذف پروژه موشن لوگو"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">کیت رابط کاربری فروشگاه</th>
-                <td>طراحی رابط کاربری</td>
-                <td>۱۴۰۵/۰۷/۲۴</td>
-                <td>۳۱٫۰ مگابایت</td>
-                <td><span class="badge badge--approved">تأیید شده</span></td>
-                <td>
-                  <div class="row-actions">
-                    <a class="icon-btn icon-btn--sm" href="#" title="مشاهده" aria-label="مشاهده پروژه کیت رابط کاربری فروشگاه"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a>
-                    <button type="button" class="icon-btn icon-btn--sm" title="حذف" aria-label="حذف پروژه کیت رابط کاربری فروشگاه"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">پیاده‌سازی پنل مدیریت</th>
-                <td>توسعه وب</td>
-                <td>۱۴۰۵/۰۷/۲۰</td>
-                <td>۴۸٫۳ مگابایت</td>
-                <td><span class="badge badge--pending">در انتظار بررسی</span></td>
-                <td>
-                  <div class="row-actions">
-                    <a class="icon-btn icon-btn--sm" href="#" title="مشاهده" aria-label="مشاهده پروژه پیاده‌سازی پنل مدیریت"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a>
-                    <button type="button" class="icon-btn icon-btn--sm" title="حذف" aria-label="حذف پروژه پیاده‌سازی پنل مدیریت"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">بروشور معرفی تیم</th>
-                <td>دیگر</td>
-                <td>۱۴۰۵/۰۷/۱۵</td>
-                <td>۹٫۶ مگابایت</td>
-                <td><span class="badge badge--approved">تأیید شده</span></td>
-                <td>
-                  <div class="row-actions">
-                    <a class="icon-btn icon-btn--sm" href="#" title="مشاهده" aria-label="مشاهده پروژه بروشور معرفی تیم"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a>
-                    <button type="button" class="icon-btn icon-btn--sm" title="حذف" aria-label="حذف پروژه بروشور معرفی تیم"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
+              {% endfor %}
+          </tbody>
           </table>
         </div>
 
@@ -199,5 +160,6 @@
       r.setAttribute('data-theme', r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     });
   </script>
+  <script href='{% static 'js/loader.js' %}' ></script>
 </body>
 </html>
