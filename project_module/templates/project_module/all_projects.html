@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  {% load project_tags %}
-  {% load static %}
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>پروژه‌های من — ASPI PANEL</title>
-{% include 'includes/styles.html' %}
-</head>
-<body>
-  <!-- Drawer state (checkbox hack, no JS) -->
-   {% include 'includes/template_loader.html' %}
+{% extends "base.html" %}
+{% load project_tags %}
+{% block content %}
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" tabindex="-1">
 
   <div class="app">
@@ -153,13 +143,11 @@
       <footer class="footer">ASPI PANEL — نسخه ۱.۰</footer>
     </div>
   </div>
-
   <script>
+    {% comment %} Dark mood {% endcomment %}
     document.getElementById('theme-toggle').addEventListener('click', function () {
       var r = document.documentElement;
       r.setAttribute('data-theme', r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     });
   </script>
-  <script href='{% static 'js/loader.js' %}' ></script>
-</body>
-</html>
+{% endblock %}

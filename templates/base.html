@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ورود به پنل — ASPI PANEL</title>
+  {% include 'includes/styles.html' %}
+
+</head>
+<body class="auth-body">
+  {% block content %}
+
+  {% endblock %}
+  <script>
+    {% comment %} Dark mood {% endcomment %}
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var r = document.documentElement;
+      r.setAttribute('data-theme', r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  </script>
+  <script src='{% static 'js/loader.js' %}' ></script>
+  <script src="{% static 'js/jalalidatepicker.min.js' %}"></script>
+  <script>
+  // Theme toggle (به همراه ذخیره در حافظه مرورگر)
+    var themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function () {
+        var r = document.documentElement;
+        var nextTheme = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        r.setAttribute('data-theme', nextTheme);
+        try { localStorage.setItem('theme', nextTheme); } catch(e) {}
+      });
+    }
+
+    // Voting: تغییر وضعیت به صورت انحصاری (Mutual Exclusivity)
+    var voteBtns = document.querySelectorAll('.vote__btn');
+    voteBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var isCurrentlyPressed = btn.getAttribute('aria-pressed') === 'true';
+        // در ابتدا تمام دکمه‌ها از حالت فشرده خارج می‌شوند
+        voteBtns.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+        // اگر قبلاً فعال نبوده، فعال می‌شود (Toggle)
+        if (!isCurrentlyPressed) {
+          btn.setAttribute('aria-pressed', 'true');
+        }
+      });
+    });     
+
+    // Task progress counter (اصلاح باگ سلکتور و پشتیبانی از ارقام فارسی)
+    var boxes = document.querySelectorAll('.tasks .check');
+    var progressEl = document.querySelector('.progress[role="progressbar"]');
+    var progressBar = progressEl ? progressEl.querySelector('.progress__bar') : null;
+    var taskProgressText = document.getElementById('task-progress');
+
+    function updateTasks() {
+      if (!boxes.length) return;
+      var done = 0;
+      boxes.forEach(function (b) { if (b.checked) done++; });
+      var pct = Math.round((done / boxes.length) * 100);
+
+      // به‌روزرسانی متن با فونت و ارقام فارسی
+      if (taskProgressText) {
+        taskProgressText.textContent = done.toLocaleString('fa-IR') + ' از ' + boxes.length.toLocaleString('fa-IR');
+      }
+
+      // تنظیم مستقیم مشخصه‌های دسترسی‌پذیری و نوار استایل
+      if (progressEl) {
+        progressEl.setAttribute('aria-valuenow', pct);
+      }
+      if (progressBar) {
+        progressBar.style.width = pct + '%';
+      }
+    }
+
+    boxes.forEach(function (b) { b.addEventListener('change', updateTasks); });
+    updateTasks();
+
+    // جلوگیری از رفرش ناخواسته صفحه هنگام ثبت نظر
+    var commentForm = document.querySelector('.comment-form');
+    if (commentForm) {
+      commentForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        // در صورت نیاز به ارسال از طریق AJAX اینجا کد مربوطه قرار می‌گیرد
+      });
+    }
+</script>
+
+</body>
+</html>

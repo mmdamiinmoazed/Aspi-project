@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
+{% extends "base.html" %}
+{% load project_tags %}
 
-  {% load static %}
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>آپلود پروژه — ASPI PANEL</title>
-
-    {% include 'includes/styles.html' %}
-</head>
-<body>
+{% block content %}
   <!-- Drawer state (checkbox hack, no JS) -->
   <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" tabindex="-1">
 
@@ -125,7 +117,15 @@
       <footer class="footer">ASPI PANEL — نسخه ۱.۰</footer>
     </div>
   </div>  
-  <script src="{% static 'dist/jalalidatepicker.min.js' %}"></script>
+    <script>
+    {% comment %} Dark mood {% endcomment %}
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var r = document.documentElement;
+      r.setAttribute('data-theme', r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  </script>
+{% endblock %}
+  {% comment %} <script src="{% static 'dist/jalalidatepicker.min.js' %}"></script>
   <script>
  jalaliDatepicker.startWatch();
   </script>
@@ -140,7 +140,7 @@
         this.files.length ? this.files[0].name : 'هنوز فایلی انتخاب نشده است.';
     });
   </script>
-  <script href='{% static 'js/loader.js' %}' ></script>
+  <script src='{% static 'js/loader.js' %}' ></script>
   
 </body>
-</html>
+</html> {% endcomment %}
