@@ -80,8 +80,10 @@ class AllProjectView(LoginRequiredMixin , generic.View) :
     login_url = reverse_lazy("login-page")
     redirect_field_name = ""
     def get(self , request) : 
-        return render(request , "project_module/my_projects.html" , context={
-             "page_active" : "my-project"
+        projects = models.Project.objects.all()
+
+        return render(request , "project_module/all_projects.html" , context={
+             "page_active" : "all-project" , "projects" : projects
         })
 
 

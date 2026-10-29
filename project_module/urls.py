@@ -4,5 +4,6 @@ urlpatterns = [
     path("upload/" , views.UploadProject.as_view() , name="upload-project"),
     path("my-projects/" , views.MyProjectView.as_view() , name="my-projects"),
     path("detail/" , views.ProjectDetail.as_view() , name="my-project"),
-    path("chat/" , views.ChatProjectView.as_view() , name="chat-project")
+    path("chat/" , views.ChatProjectView.as_view() , name="chat-project"),
+    path("all-projects/" , views.AllProjectView.as_view() , name="all-projects" )
 ]
