@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  {% load account_tag %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>میز کار — ASPI PANEL</title>
@@ -35,7 +36,10 @@
         <section class="greeting">
           <h2 class="greeting__title">  سلام  {{ user.first_name }}  {{ user.last_name }} </h2>
           <p> نقش : {{ user.role }} </p>
-          <p class="muted">آخرین ورود: {{ user.last_login|date:'Y/m/d' }} — ساعت ۱۴:۲۲</p>
+          <p class="muted">آخرین ورود:
+             {% convert_date user.last_login as the_time %}
+             {{ the_time|date:'Y/m/d' }} — {{ the_time|date:"h:i" }}
+            </p>
         </section>
 
         <!-- Stats -->
@@ -70,11 +74,20 @@
              {{ user.first_name }} {{ user.last_name }}
               
             </dd></div>
-            <div class="dl__item"><dt>نام کاربری</dt><dd dir="ltr" class="ltr-start">m.rezaei</dd></div>
+            <div class="dl__item"><dt>نام کاربری</dt><dd dir="ltr" class="ltr-start">
+              {{ user.username }}
+            </dd></div>
             <div class="dl__item"><dt>ایمیل</dt><dd dir="ltr" class="ltr-start">{{ user.email }}</dd></div>
             <div class="dl__item"><dt>نقش / عنوان</dt><dd> {{ user.role }} </dd></div>
             <div class="dl__item"><dt>شماره تماس</dt><dd dir="ltr" class="ltr-start"> {{ user.phone_number }} </dd></div>
-            <div class="dl__item"><dt>تاریخ عضویت</dt><dd> {{ user.created_at }} </dd></div>
+
+            <div class="dl__item"><dt>تاریخ عضویت</dt><dd> 
+               {% convert_date user.created_at as the_time %}
+
+               {{ the_time|date:"Y/m/d" }}
+              
+            </dd></div>
+            
             <div class="dl__item"><dt>وضعیت حساب</dt><dd><span class="badge badge--approved">فعال</span></dd></div>
           </dl>
         </section>

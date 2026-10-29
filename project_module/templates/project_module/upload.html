@@ -43,12 +43,17 @@
         <p class="lead">فایل پروژه خود را بارگذاری و اطلاعات آن را تکمیل کنید.</p>
 
         <div class="split">
-          <section class="card panel" aria-label="فرم آپلود">
-            <form class="form" novalidate>
+          <section class="card panel" aria-label="فرم آپلود" >
+            <form method='post' class="form" autocomplete="on" novalidate enctype="multipart/form-data">
+              {% csrf_token %}
               <!-- Drop zone -->
-              <input class="visually-hidden" type="file" id="project-file" name="project_file" accept=".zip,.rar,.pdf,.psd">
+               {{ form.project_file.errors }}
+               {{ form.project_file.label }}
+               {{ form.project_file }}
+              {% comment %} <input class="visually-hidden" type="file" id="project-file" name="project_file" accept=".zip,.rar,.pdf,.psd"> {% endcomment %}
               <label class="dropzone" for="project-file">
                 <svg class="icon icon--xl" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>
+                
                 <span class="dropzone__title">فایل را اینجا رها کنید</span>
                 <span class="dropzone__sub">یا برای انتخاب فایل کلیک کنید</span>
                 <span class="dropzone__note">حداکثر حجم مجاز: ۵۰ مگابایت — فرمت‌های مجاز: ZIP, RAR, PDF, PSD</span>
@@ -64,37 +69,37 @@
 
               <div class="form-grid">
                 <div class="field">
-                  <label for="title">عنوان پروژه</label>
-                  <input class="input" type="text" id="title" name="title" placeholder="مثلاً: طراحی داشبورد مالی" required>
+                        {{ form.title.errors }}
+                  <label for="title">{{ form.title.label }}</label>
+            
+                  {{ form.title }}
+                  {% comment %} <input class="input" type="text" id="title" name="title" placeholder="مثلاً: طراحی داشبورد مالی" required> {% endcomment %}
                 </div>
 
                 <div class="field">
-                  <label for="category">دسته‌بندی</label>
-                  <select class="input" id="category" name="category" required>
-                    <option value="">انتخاب کنید…</option>
-                    <option value="ui">طراحی رابط کاربری</option>
-                    <option value="web">توسعه وب</option>
-                    <option value="motion">موشن گرافیک</option>
-                    <option value="other">دیگر</option>
-                  </select>
+                  {{ form.category.errors }}
+                  <label for="category">{{ form.category.label }}</label>
+                  {{ form.category }}
                 </div>
 
                 <div class="field field--full">
-                  <label for="description">توضیحات</label>
-                  <textarea class="input" id="description" name="description" rows="5" maxlength="500" placeholder="توضیح کوتاهی درباره پروژه بنویسید…"></textarea>
+                  {{ form.description.errors }}
+                  <label for="description">{{ form.description.label }}</label>
+                  {{ form.description }}
                   <span class="helper counter">۰ / ۵۰۰</span>
                 </div>
 
                 <div class="field">
-                  <label for="due-date">تاریخ تحویل</label>\
+                  <label for="due-date">تاریخ تحویل</label>
                   {% comment %} Persian calender {% endcomment %}
-                  <input class="input" data-jdp  id="due-date" name="due_date" placeholder="۱۴۰۵/۰۸/۰۱" dir="ltr" inputmode="numeric">
+                  <input required class="input" data-jdp  id="due-date" name="deadline" placeholder="۱۴۰۵/۰۸/۰۱" dir="ltr" inputmode="numeric"> 
                   <span class="helper">قالب: سال/ماه/روز</span>
                 </div>
               </div>
 
               <div class="check-row">
-                <input class="check" type="checkbox" id="confirm" name="confirm" required>
+                {{ form.check_box.errors }}
+                {{ form.check_box }}
                 <label for="confirm">تأیید می‌کنم اطلاعات وارد شده صحیح است.</label>
               </div>
 
@@ -118,7 +123,7 @@
 
       <footer class="footer">ASPI PANEL — نسخه ۱.۰</footer>
     </div>
-  </div>
+  </div>  
   <script src="{% static 'dist/jalalidatepicker.min.js' %}"></script>
   <script>
  jalaliDatepicker.startWatch();
@@ -134,5 +139,6 @@
         this.files.length ? this.files[0].name : 'هنوز فایلی انتخاب نشده است.';
     });
   </script>
+  
 </body>
 </html>

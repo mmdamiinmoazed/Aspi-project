@@ -45,6 +45,7 @@ class PanelView(LoginRequiredMixin,generic.View) :
     redirect_field_name = ""
     def get(self , requets:Request) : 
         user = self.request.user
+        
         if not user.is_authenticated : 
             return redirect("login-page")
         

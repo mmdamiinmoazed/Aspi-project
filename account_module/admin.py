@@ -13,12 +13,13 @@ class UserAdmin(BaseUserAdmin) :
         (None, {
             "fields": ("username" , "password" )
         }),
-        ("Personal information", {
+        ("Personal information ", {
             "fields": (
                 "first_name",
                 "last_name",
                 "phone_number",
                 "role",
+                "email"
             ),
         }),
         ("Permissions", {
