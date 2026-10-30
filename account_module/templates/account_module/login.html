@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'account_module/base_template/login_base.html' %}
 {% load static %}
 {% block content %}
   <button type="button" class="icon-btn theme-toggle auth-theme" id="theme-toggle" aria-label="تغییر پوسته روشن/تیره" title="تغییر پوسته">
@@ -71,6 +71,16 @@
       </div>
     </main>
   </div>
-
+<script>
+      var themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function () {
+        var r = document.documentElement;
+        var nextTheme = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        r.setAttribute('data-theme', nextTheme);
+        try { localStorage.setItem('theme', nextTheme); } catch(e) {}
+      });
+    }
+</script>
 
 {% endblock %}
