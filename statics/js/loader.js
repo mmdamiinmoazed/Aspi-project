@@ -1,67 +1,66 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const loader = document.getElementById("page-loader");
-
-  function showLoader() {
-    if (loader) {
-      loader.classList.remove("loader-hidden");
-    }
-  }
-
-  function hideLoader() {
-    if (loader) {
-      loader.classList.add("loader-hidden");
-    }
-  }
-
-  // ۱. مخفی شدن با لود کامل صفحه
-  window.addEventListener("load", function () {
-    setTimeout(hideLoader, 200);
-  });
-
-  // ۲. هندل کردن دکمه Back/Forward مرورگر
-  window.addEventListener("pageshow", function () {
-    hideLoader();
-  });
-
-  // ۳. هندل کردن لینک‌ها
-  document.addEventListener("click", function (event) {
-    const link = event.target.closest("a");
-    if (!link) return;
-
-    const href = link.getAttribute("href");
-    if (!href || href.startsWith("#") || href.startsWith("javascript:") || href === "") return;
-    if (link.target === "_blank" || event.ctrlKey || event.metaKey) return;
-
-    try {
-      const targetUrl = new URL(link.href, window.location.href);
-      if (targetUrl.origin !== window.location.origin) return;
-      if (targetUrl.href === window.location.href) return;
-
-      showLoader();
-    } catch (e) {}
-  }, true);
-
-  // ۴. هندل کردن هوشمند فرم‌ها
-  document.addEventListener("submit", function (event) {
-    const form = event.target;
-
-    // الف) اگر فرم نامعتبره (مثلا فیلد required پر نشده)، لودر نیاد
-    if (form.checkValidity && !form.checkValidity()) {
-      return;
+(function () {
+    // تابع قطع و مخفی کردن اجباری لودر
+    function forceHideLoader() {
+        const loader = document.getElementById("page-loader");
+        if (loader) {
+            loader.style.setProperty("display", "none", "important");
+            loader.classList.add("loader-hidden");
+        }
     }
 
-    // ب) با تاخیر ۵۰ میلی‌ثانیه چک کن آیا واقعا فرم داره سابمیت میشه؟
-    // اگر JS دیگه‌ای جلوش رو با preventDefault گرفته باشه، لودر نمایش داده نمیشه
-    setTimeout(function () {
-      if (!event.defaultPrevented && form.target !== "_blank") {
-        showLoader();
+    // ۱. بلافاصله در لحظه اجرا، لودر رو مخفی کن
+    forceHideLoader();
 
-        // ج) تایم‌اوت نجات (Fail-safe): 
-        // اگر بعد از ۱۵ ثانیه به هر دلیلی صفحه رفرش نشد، لودر رو ببند تا صفحه قفل نشه
-        setTimeout(function () {
-          hideLoader();
-        }, 15000);
-      }
-    }, 50);
-  });
-});
+    // ۲. در تمام مراحل آماده‌شدن صفحه مطمئن شو لودر بسته است
+    document.addEventListener("DOMContentLoaded", forceHideLoader);
+    window.addEventListener("load", forceHideLoader);
+    window.addEventListener("pageshow", forceHideLoader);
+
+    // ۳. تایمر برای نمایش با تاخیر
+    let loaderTimeout = null;
+
+    function triggerLoader() {
+        clearTimeout(loaderTimeout);
+        // تاخیر ۴۰۰ میلی‌ثانیه: اگر لود سریع بود اصلاً ظاهر نشه
+        loaderTimeout = setTimeout(function () {
+            const loader = document.getElementById("page-loader");
+            if (loader) {
+                loader.style.setProperty("display", "flex", "important");
+                loader.classList.remove("loader-hidden");
+            }
+        }, 400);
+
+        // سوپاپ اطمینان: اگر تا ۸ ثانیه صفحه عوض نشد، خودکار لودر بسته بشه تا گیر نکنه
+        setTimeout(forceHideLoader, 8000);
+    }
+
+    // ۴. فقط روی لینک‌های واقعی و معتبر کار کنه
+    document.addEventListener("click", function (e) {
+        const link = e.target.closest("a");
+        if (!link) return;
+
+        const href = link.getAttribute("href");
+
+        // نادیده گرفتن لینک‌های پوچ، داخلی یا پنجره جدید
+        if (
+            !href ||
+            href.startsWith("#") ||
+            href.startsWith("javascript:") ||
+            link.getAttribute("target") === "_blank" ||
+            e.ctrlKey || e.metaKey || e.shiftKey
+        ) {
+            return;
+        }
+
+        triggerLoader();
+    });
+
+    // ۵. فرم‌ها (فقط فرم‌هایی که ولیدیشن موفق دارن)
+    document.addEventListener("submit", function (e) {
+        if (e.defaultPrevented) return;
+        const form = e.target;
+        if (form && !form.checkValidity()) return;
+
+        triggerLoader();
+    });
+})();
