@@ -13,76 +13,55 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // ۱. وقتی صفحه لود شد، لودر مخفی بشه
+  // ۱. مخفی شدن با لود کامل صفحه
   window.addEventListener("load", function () {
-    // ۲۰۰ میلی‌ثانیه تاخیر نرم برای تجربه کاربری بهتر
     setTimeout(hideLoader, 200);
   });
 
-  // ۲. جلوگیری از گیر کردن لودر موقع زدن دکمه Back یا Forward مرورگر
-  window.addEventListener("pageshow", function (event) {
+  // ۲. هندل کردن دکمه Back/Forward مرورگر
+  window.addEventListener("pageshow", function () {
     hideLoader();
   });
 
-  // ۳. هندل کردن کلیک روی لینک‌های منو و صفحات
+  // ۳. هندل کردن لینک‌ها
   document.addEventListener("click", function (event) {
     const link = event.target.closest("a");
-
     if (!link) return;
 
     const href = link.getAttribute("href");
+    if (!href || href.startsWith("#") || href.startsWith("javascript:") || href === "") return;
+    if (link.target === "_blank" || event.ctrlKey || event.metaKey) return;
 
-    // اگر لینک به بالا پرش می‌کنه، دکمه جاوااسکریپتیه یا خالیه
-    if (!href || href.startsWith("#") || href.startsWith("javascript:") || href === "") {
-      return;
-    }
-
-    // اگر کاربر لینک رو توی تب جدید باز کرد (مثلا با کلیک راست یا target="_blank")
-    if (link.target === "_blank" || event.ctrlKey || event.metaKey) {
-      return;
-    }
-
-    // بررسی اینکه آیا لینک مربوط به همین سایت است؟
     try {
       const targetUrl = new URL(link.href, window.location.href);
-
-      // لینک به سایت دیگه‌ای میره
       if (targetUrl.origin !== window.location.origin) return;
-
-      // اگر کاربر روی لینک صفحه‌ای که دقیقاً توش هست کلیک کرد
       if (targetUrl.href === window.location.href) return;
 
-      // نمایش لودر برای انتقال به صفحه جدید
       showLoader();
-    } catch (e) {
-      // آدرس نامعتبر بود
-    }
+    } catch (e) {}
   }, true);
 
-  // ۴. موقع سابمیت فرم‌ها هم لودر نشون داده بشه (اختیاری ولی به شدت کاربردی برای فرم‌های ثبت‌نام/لاگین)
+  // ۴. هندل کردن هوشمند فرم‌ها
   document.addEventListener("submit", function (event) {
     const form = event.target;
-    // اگر فرم target="_blank" نداره لودر رو نشون بده
-    if (form.target !== "_blank") {
-      showLoader();
+
+    // الف) اگر فرم نامعتبره (مثلا فیلد required پر نشده)، لودر نیاد
+    if (form.checkValidity && !form.checkValidity()) {
+      return;
     }
+
+    // ب) با تاخیر ۵۰ میلی‌ثانیه چک کن آیا واقعا فرم داره سابمیت میشه؟
+    // اگر JS دیگه‌ای جلوش رو با preventDefault گرفته باشه، لودر نمایش داده نمیشه
+    setTimeout(function () {
+      if (!event.defaultPrevented && form.target !== "_blank") {
+        showLoader();
+
+        // ج) تایم‌اوت نجات (Fail-safe): 
+        // اگر بعد از ۱۵ ثانیه به هر دلیلی صفحه رفرش نشد، لودر رو ببند تا صفحه قفل نشه
+        setTimeout(function () {
+          hideLoader();
+        }, 15000);
+      }
+    }, 50);
   });
 });
-
-
-
-document.addEventListener("submit", function (event) {
-  const form = event.target;
-  // چک می‌کنه اگر فرم خطای اعتبارسنجی (مثل فیلد خالی اجباری) داره، لودر نیاد
-  if (form.checkValidity && !form.checkValidity()) {
-    return;
-  }
-
-  if (form.target !== "_blank") {
-    showLoader();
-  }
-});
-
-
-
-// These codes are made by ai (Gemini)

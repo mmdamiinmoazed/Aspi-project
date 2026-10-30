@@ -19,9 +19,13 @@
       var r = document.documentElement;
       r.setAttribute('data-theme', r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
     });
+
   </script>
   <script src='{% static 'js/loader.js' %}' ></script>
   <script src="{% static 'js/jalalidatepicker.min.js' %}"></script>
+  <script>
+  jalaliDatepicker.startWatch();
+  </script>
   <script>
   // Theme toggle (به همراه ذخیره در حافظه مرورگر)
     var themeBtn = document.getElementById('theme-toggle');
@@ -85,6 +89,13 @@
         // در صورت نیاز به ارسال از طریق AJAX اینجا کد مربوطه قرار می‌گیرد
       });
     }
+</script>
+<script>
+      document.getElementById('project-file').addEventListener('change', function () {
+      document.getElementById('file-name').textContent =
+        this.files.length ? this.files[0].name : 'هنوز فایلی انتخاب نشده است.';
+    });
+
 </script>
 
 </body>
