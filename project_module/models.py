@@ -20,7 +20,7 @@ class Project(models.Model) :
     description = models.TextField(max_length=500)
     deadline = models.DateTimeField()
 
-    slug = models.SlugField()
+    slug = models.SlugField(db_index=True,unique=True , blank=True , allow_unicode=True)
 
     performer = models.ForeignKey(get_user_model() , on_delete=models.CASCADE,null=True)
 
@@ -28,6 +28,8 @@ class Project(models.Model) :
 
     created_at = models.DateTimeField(auto_now_add=True , null=True)
     def save(self,*args, **kwargs) : 
-        self.slug = slugify(self.title)
-
+        if not self.slug : 
+            self.slug = slugify(self.title , allow_unicode=True)
         return super().save(*args, **kwargs)
+    def __str__(self):
+        return self.title

@@ -69,6 +69,7 @@
             <thead>
               <tr>
                 <th scope="col">عنوان پروژه</th>
+                <th scope="col"> دیدن جزییات </th>
                 <th scope="col">دسته‌بندی</th>
                 <th scope="col">تاریخ ارسال</th>
                 <th scope="col">حجم فایل</th>
@@ -82,6 +83,7 @@
               {% for project in projects %}
               <tr>
                 <th scope="row">{{ project.title }}</th>
+                <th scope="row"> <a href='{% url 'project-detail' slug=project.slug %}'>جزییات</a> </th>
                 <td>
                   
                  {{ project.category }}

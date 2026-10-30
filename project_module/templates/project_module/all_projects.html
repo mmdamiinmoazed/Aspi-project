@@ -67,6 +67,7 @@
             <thead>
               <tr>
                 <th scope="col">عنوان پروژه</th>
+                <th scope="col">دیدن جزییات</th>
                 <th scope="col">دسته‌بندی</th>
                 
                 <th scope="col">تاریخ ارسال</th>
@@ -85,6 +86,11 @@
                 <th scope="row">
 
                   {{ project.title }}
+
+                </th>
+                <th scope="row">
+
+                  <a style='text-decoration : none;' href='{% url "project-detail" slug=project.slug %}'> دیدن جزییات </a>
 
                 </th>
                 <td>
