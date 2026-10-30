@@ -1,42 +1,98 @@
-/* HTML: <div class="loader"></div> */
+/* لایه کامل کل صفحه */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0b0f19; /* پس‌زمینه تیره برای دیده شدن افکت سفید لودر */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* کلاسی که وقتی صفحه لود شد اضافه می‌شه تا لودر غیب بشه */
+.loader-overlay.loader-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* کانتینر برای تنظیم طول مسیر خط لودر */
+.loader-container {
+  width: 320px; /* طول خط حرکت لودر */
+  max-width: 80%;
+  position: relative;
+}
+
+/* انیمیشن خودت */
 .loader {
-  width: 60px;
-  aspect-ratio: 4;
-  --_g: no-repeat radial-gradient(circle closest-side,#000 90%,#0000);
-  background: 
-    var(--_g) 0%   50%,
-    var(--_g) 50%  50%,
-    var(--_g) 100% 50%;
-  background-size: calc(100%/3) 100%;
-  animation: l7 1s infinite linear;
-}
-@keyframes l7 {
-    33%{background-size:calc(100%/3) 0%  ,calc(100%/3) 100%,calc(100%/3) 100%}
-    50%{background-size:calc(100%/3) 100%,calc(100%/3) 0%  ,calc(100%/3) 100%}
-    66%{background-size:calc(100%/3) 100%,calc(100%/3) 100%,calc(100%/3) 0%  }
+  --color-1: #fff;
+  --color-2: rgba(255, 255, 255, 0.7);
+  --size: 1.2px; /* کمی سایزش رو بولدتر کردم که بهتر دیده بشه */
+
+  width: 0;
+  height: calc(4.8 * var(--size));
+  display: inline-block;
+  position: relative;
+  background: var(--color-1);
+  box-shadow: 0 0 calc(12 * var(--size)) var(--color-2);
+  box-sizing: border-box;
+  animation: animFw 2.5s ease-in-out infinite; /* زمان رو سریع‌تر کردم که کاربر زیاد منتظر نمونه */
 }
 
-/* Ai code */
-.page-loader {
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
+.loader::after,
+.loader::before {
+  content: '';
+  width: calc(10 * var(--size));
+  height: calc(1 * var(--size));
+  background: var(--color-1);
+  position: absolute;
+  top: calc(9 * var(--size));
+  right: calc(-2 * var(--size));
+  opacity: 0;
+  transform: rotate(-45deg) translateX(0);
+  box-sizing: border-box;
+  animation: coli1 0.3s linear infinite;
+}
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.loader::before {
+  top: calc(-4 * var(--size));
+  transform: rotate(45deg);
+  animation: coli2 0.3s linear infinite;
+}
 
-    background: rgba(255, 255, 255, 0.9);
+@keyframes animFw {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
 
+@keyframes coli1 {
+  0% {
+    transform: rotate(-45deg) translateX(0);
+    opacity: 0.7;
+  }
+  100% {
+    transform: rotate(-45deg) translateX(calc(-45 * var(--size)));
     opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-
-    transition: opacity 0.2s ease;
+  }
 }
 
-.page-loader.active {
+@keyframes coli2 {
+  0% {
+    transform: rotate(45deg) translateX(0);
     opacity: 1;
-    visibility: visible;
-    pointer-events: all;
+  }
+  100% {
+    transform: rotate(45deg) translateX(calc(-45 * var(--size)));
+    opacity: 0.7;
+  }
 }
