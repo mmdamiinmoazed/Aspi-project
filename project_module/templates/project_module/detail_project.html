@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>جزئیات پروژه — ASPI PANEL</title>
- {% load static %}
-  {% include 'includes/styles.html' %}
-</head>
-<body>
-  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" tabindex="-1">
-
-  <div class="app">
-   {% include 'account_module/base_template/right-bar.html' %}
+{% extends 'base.html' %}
+{% load project_tags %}
+{% block content %}
 
     <label for="nav-toggle" class="overlay" aria-hidden="true"></label>
 
@@ -31,20 +20,23 @@
       </header>
 
       <main class="content">
-        <nav class="breadcrumb" aria-label="مسیر صفحه">
-          <ol>
-            <li><a href="dashboard.html">میز کار</a></li>
-            <li><a href="projects.html">پروژه‌های من</a></li>
-            <li aria-current="page">طراحی اپلیکیشن بانکی</li>
-          </ol>
-        </nav>
+ 
 
         <!-- Project header -->
         <section class="card panel project-head">
           <div class="project-head__main">
-            <h2 class="project-head__title">طراحی اپلیکیشن بانکی</h2>
-            <p class="muted">دسته‌بندی: طراحی رابط کاربری — تاریخ ارسال: ۱۴۰۵/۰۷/۳۰ — حجم: ۱۸٫۴ مگابایت</p>
-            <p class="project-head__desc">طراحی کامل رابط کاربری اپلیکیشن بانکی شامل صفحات ورود، داشبورد حساب، انتقال وجه و تاریخچه تراکنش‌ها.</p>
+            <h2 class="project-head__title">
+
+              {{ project.title }}
+          
+          </h2>
+          <p> انجام دهنده :  {{ project.performer.first_name }} {{ project.performer.last_name }} </p>
+            <p class="muted">دسته‌بندی: {{ project.category }} 
+              — تاریخ ارسال: {{ project.created_at|date_changer }}</p>
+            <p class="project-head__desc">
+              {{ project.description }}
+        
+          </p>
           </div>
           <div class="project-head__side">
             <span class="badge badge--pending">در انتظار بررسی</span>
@@ -57,71 +49,79 @@
 
         <div class="detail-grid">
           <div class="detail-main">
+<!-- Voting & comments -->
+<section class="card panel" aria-labelledby="vote-title">
+  <div class="panel__head">
+    <h2 id="vote-title" class="panel__title">رأی‌گیری و نظرات</h2>
+  </div>
 
-            <!-- Voting & comments -->
-            <section class="card panel" aria-labelledby="vote-title">
-              <div class="panel__head">
-                <h2 id="vote-title" class="panel__title">رأی‌گیری و نظرات</h2>
-              </div>
 
-              <div class="vote" role="group" aria-label="رأی به این پروژه">
-                <button type="button" class="vote__btn" aria-pressed="false" data-vote="up">
-                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H7"/></svg>
-                  <span>موافقم</span>
-                  <strong class="vote__count">۱۴</strong>
-                </button>
-                <button type="button" class="vote__btn" aria-pressed="false" data-vote="down">
-                  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 13V4h3v9zM17 13l-4 7a2 2 0 0 1-2-2v-3H5a2 2 0 0 1-2-2l1-7a2 2 0 0 1 2-2h9"/></svg>
-                  <span>مخالفم</span>
-                  <strong class="vote__count">۳</strong>
-                </button>
-              </div>
+  <form id="project-vote-form" method="post" action="{% url 'submit-vote' project.id %}">
+    {% csrf_token %}
+    <div class="vote" role="group" aria-label="رأی به این پروژه">
+      <!-- نوع دکمه به button تغییر داده شد -->
+      <button type="button" class="vote__btn" aria-pressed="false" data-vote="like">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H7"/></svg>
+        <span>موافقم</span>
+        <strong class="vote__count">{{ project.likes_count }}</strong>
+      </button>
 
-              <h3 class="sub-title">نظرات اعضا (۴)</h3>
-              <ul class="comments">
-                <li class="comment">
-                  <span class="avatar avatar--sm" aria-hidden="true">س</span>
-                  <div class="comment__body">
-                    <p class="comment__meta"><strong>سارا احمدی</strong> <time class="muted">۲ ساعت پیش</time></p>
-                    <p>چیدمان صفحه انتقال وجه خیلی خوب است. فقط دکمه تأیید باید بزرگ‌تر باشد.</p>
-                  </div>
-                </li>
-                <li class="comment">
-                  <span class="avatar avatar--sm" aria-hidden="true">ع</span>
-                  <div class="comment__body">
-                    <p class="comment__meta"><strong>علی کریمی</strong> <time class="muted">دیروز</time></p>
-                    <p>رنگ‌بندی حالت تیره کنتراست کافی دارد.</p>
-                  </div>
-                </li>
-                <li class="comment">
-                  <span class="avatar avatar--sm" aria-hidden="true">ن</span>
-                  <div class="comment__body">
-                    <p class="comment__meta"><strong>نرگس موسوی</strong> <time class="muted">۲ روز پیش</time></p>
-                    <p>تاریخچه تراکنش‌ها به نظر شلوغ می‌آید. فیلتر تاریخ لازم است.</p>
-                  </div>
-                </li>
-                <li class="comment">
-                  <span class="avatar avatar--sm" aria-hidden="true">ر</span>
-                  <div class="comment__body">
-                    <p class="comment__meta"><strong>رضا تهرانی</strong> <time class="muted">۳ روز پیش</time></p>
-                    <p>نسخه موبایل عالی است.</p>
-                  </div>
-                </li>
-              </ul>
+      <button type="button" class="vote__btn" aria-pressed="false" data-vote="dislike">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 13V4h3v9zM17 13l-4 7a2 2 0 0 1-2-2v-3H5a2 2 0 0 1-2-2l1-7a2 2 0 0 1 2-2h9"/></svg>
+        <span>مخالفم</span>
+        <strong class="vote__count">{{ project.dislikes_count }}</strong>
+      </button>
+    </div>
+  </form>
 
-              <form class="form comment-form" novalidate>
-                <div class="field">
-                  <label for="comment">نظر شما</label>
-                  <textarea class="input" id="comment" name="comment" rows="3" maxlength="300" placeholder="نظر خود را درباره این پروژه بنویسید…"></textarea>
-                </div>
-                <div class="actions">
-                  <button type="submit" class="btn btn--sm">ثبت نظر</button>
-                </div>
-              </form>
-            </section>
+  <h3 class="sub-title">نظرات اعضا (۴)</h3>
+  <ul class="comments">
+    <li class="comment">
+      <span class="avatar avatar--sm" aria-hidden="true">س</span>
+      <div class="comment__body">
+        <p class="comment__meta"><strong>سارا احمدی</strong> <time class="muted">۲ ساعت پیش</time></p>
+        <p>چیدمان صفحه انتقال وجه خیلی خوب است. فقط دکمه تأیید باید بزرگ‌تر باشد.</p>
+      </div>
+    </li>
+    <li class="comment">
+      <span class="avatar avatar--sm" aria-hidden="true">ع</span>
+      <div class="comment__body">
+        <p class="comment__meta"><strong>علی کریمی</strong> <time class="muted">دیروز</time></p>
+        <p>رنگ‌بندی حالت تیره کنتراست کافی دارد.</p>
+      </div>
+    </li>
+    <li class="comment">
+      <span class="avatar avatar--sm" aria-hidden="true">ن</span>
+      <div class="comment__body">
+        <p class="comment__meta"><strong>نرگس موسوی</strong> <time class="muted">۲ روز پیش</time></p>
+        <p>تاریخچه تراکنش‌ها به نظر شلوغ می‌آید. فیلتر تاریخ لازم است.</p>
+      </div>
+    </li>
+    <li class="comment">
+      <span class="avatar avatar--sm" aria-hidden="true">ر</span>
+      <div class="comment__body">
+        <p class="comment__meta"><strong>رضا تهرانی</strong> <time class="muted">۳ روز پیش</time></p>
+        <p>نسخه موبایل عالی است.</p>
+      </div>
+    </li>
+  </ul>
+
+  <form class="form comment-form" novalidate>
+    <div class="field">
+      <label for="comment">نظر شما</label>
+      <textarea class="input" id="comment" name="comment" rows="3" maxlength="300" placeholder="نظر خود را درباره این پروژه بنویسید…"></textarea>
+    </div>
+    <div class="actions">
+      <button type="submit" class="btn btn--sm">ثبت نظر</button>
+    </div>
+  </form>
+</section>
+
+<!-- اسکریپت اختصاصی برای دریافت و ارسال دیتا -->
+
 
             <!-- Improvements -->
-            <section class="card panel" aria-labelledby="improve-title">
+            {% comment %} <section class="card panel" aria-labelledby="improve-title">
               <div class="panel__head">
                 <h2 id="improve-title" class="panel__title">پیشنهادهای بهبود</h2>
               </div>
@@ -143,7 +143,7 @@
                   <p class="muted">پیام‌های خطا برای ورودی‌های نامعتبر در تمام فرم‌های انتقال وجه طراحی شود.</p>
                 </li>
               </ol>
-            </section>
+            </section> {% endcomment %}
           </div>
 
           <aside class="detail-side">
@@ -182,7 +182,7 @@
             </section>
 
             <!-- AI analysis -->
-            <section class="card panel ai" aria-labelledby="ai-title">
+            {% comment %} <section class="card panel ai" aria-labelledby="ai-title">
               <div class="panel__head">
                 <h2 id="ai-title" class="panel__title">تحلیل هوش مصنوعی</h2>
                 <span class="badge">AI</span>
@@ -205,7 +205,7 @@
                 <summary>هوش مصنوعی چیست؟</summary>
                 <p>هوش مصنوعی (AI) به سامانه‌هایی گفته می‌شود که می‌توانند الگوها را در داده‌ها تشخیص دهند و بر اساس آن‌ها تحلیل یا پیشنهاد ارائه کنند. در این بخش، AI طرح را با معیارهای طراحی مقایسه می‌کند و نقاط قوت و ضعف را نشان می‌دهد.</p>
               </details>
-            </section>
+            </section> {% endcomment %}
 
             <!-- Pictures -->
             <section class="card panel" aria-labelledby="gallery-title">
@@ -227,7 +227,7 @@
       <footer class="footer">ASPI PANEL — نسخه ۱.۰</footer>
     </div>
   </div>
-
+{% endblock %}
   {% comment %} <script>
     // Theme toggle (به همراه ذخیره در حافظه مرورگر)
     var themeBtn = document.getElementById('theme-toggle');

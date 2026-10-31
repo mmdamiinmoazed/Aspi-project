@@ -7,6 +7,7 @@ from . import forms,models
 from django.contrib.auth import get_user_model , login , authenticate  , logout , decorators
 from django.contrib.auth.mixins import LoginRequiredMixin
 import jdatetime
+from project_module import models
 # Create your views here.
 User = get_user_model()
 class LoginView(generic.View) : 
@@ -45,13 +46,13 @@ class PanelView(LoginRequiredMixin,generic.View) :
     redirect_field_name = ""
     def get(self , requets:Request) : 
         user = self.request.user
-        
+        projects = models.Project.objects.filter(performer=user.id)
         if not user.is_authenticated : 
             return redirect("login-page")
         
         print(user.username)
         return render(self.request , "account_module/dashboard.html" , context={
-            "user" : user , "page_active" : "dashboard"
+            "user" : user , "page_active" : "dashboard" , "projects" : None
         })
 
 

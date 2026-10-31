@@ -3,6 +3,22 @@ from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from datetime import datetime
 # Create your models here.
+class Comment(models.Model) : 
+    # Implement of comment model
+    pass
+class Vote(models.Model) : 
+    VOTE_CHOICE = [
+        ("dislike" , 'موافق نیستم'),
+        ("like" , "موافق هستم")
+    ]
+    vote_type = models.CharField(choices=VOTE_CHOICE , max_length=25)
+    user = models.ForeignKey(get_user_model() , on_delete=models.CASCADE )
+    project = models.ForeignKey("Project" , on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta: 
+        unique_together  = ("user" , "project")
+
 class Project(models.Model) : 
     CATEGORY_FIELDS = [ 
         ("طراحی رابط کاربری" , 'ui/ux') , 
@@ -19,6 +35,9 @@ class Project(models.Model) :
     category = models.CharField(choices=CATEGORY_FIELDS , max_length=25)
     description = models.TextField(max_length=500)
     deadline = models.DateTimeField()
+
+    likes_count = models.IntegerField(default=0)
+    dislikes_count = models.IntegerField(default=0)
 
     slug = models.SlugField(db_index=True,unique=True , blank=True , allow_unicode=True)
 

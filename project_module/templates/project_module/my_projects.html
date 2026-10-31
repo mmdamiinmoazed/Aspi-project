@@ -89,8 +89,8 @@
                  {{ project.category }}
                   
                 </td>
-                <td> {{ project.deadline }} </td>
-                <td> {{ project.project_file.size }} </td>
+                <td> {{ project.deadline|date_changer }} </td>
+                <td> {{ project.project_file|filesize_filter }} </td>
                 <td><span class="badge badge--pending">در انتظار بررسی</span></td>
                 <td>
                   <div class="row-actions">

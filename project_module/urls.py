@@ -5,5 +5,7 @@ urlpatterns = [
     path("my-projects/" , views.MyProjectView.as_view() , name="my-projects"),
     path("detail/<str:slug>/" , views.ProjectDetail.as_view() , name="project-detail"),
     path("chat/" , views.ChatProjectView.as_view() , name="chat-project"),
-    path("all-projects/" , views.AllProjectView.as_view() , name="all-projects" )
+    path("all-projects/" , views.AllProjectView.as_view() , name="all-projects" ),
+    path("submit-vote/<int:project_id>" , views.SubmitVote.as_view() , name="submit-vote")
+
 ]

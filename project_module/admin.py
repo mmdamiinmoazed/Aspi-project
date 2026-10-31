@@ -4,3 +4,8 @@ from . import models
 @admin.register(models.Project)
 class ProjectAdmin(admin.ModelAdmin) : 
     pass
+
+
+@admin.register(models.Vote) 
+class VoteAdmin(admin.ModelAdmin) : 
+    pass 
