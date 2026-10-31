@@ -83,7 +83,13 @@
               
             </dd></div>
             
-            <div class="dl__item"><dt>وضعیت حساب</dt><dd><span class="badge badge--approved">فعال</span></dd></div>
+            <div class="dl__item"><dt>وضعیت حساب</dt><dd><span class="badge badge--approved"
+              {% if user.is_active %}
+              >فعال
+              {% else %}
+              غیر فعال
+              {% endif %}
+            </span></dd></div>
           </dl>
         </section>
 
