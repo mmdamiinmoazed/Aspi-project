@@ -63,13 +63,13 @@
       <button type="button" class="vote__btn" aria-pressed="false" data-vote="like">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H7"/></svg>
         <span>موافقم</span>
-        <strong class="vote__count">{{ project.likes_count }}</strong>
+        <strong class="vote__count">{{ project_info.likes }}</strong>
       </button>
 
       <button type="button" class="vote__btn" aria-pressed="false" data-vote="dislike">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 13V4h3v9zM17 13l-4 7a2 2 0 0 1-2-2v-3H5a2 2 0 0 1-2-2l1-7a2 2 0 0 1 2-2h9"/></svg>
         <span>مخالفم</span>
-        <strong class="vote__count">{{ project.dislikes_count }}</strong>
+        <strong class="vote__count">{{ project_info.dislikes }}</strong>
       </button>
     </div>
   </form>

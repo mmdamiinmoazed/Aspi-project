@@ -9,6 +9,26 @@ from . import models
 import jdatetime
 from django.http import HttpResponse
 # Create your views here.
+
+
+# TEST FUNCTION
+def project_votes(project) : 
+    votes = models.Vote.objects.filter(project=project)
+    likes = 0
+    dislikes = 0
+    for vote in votes : 
+        if vote.vote_type == "like" : 
+            likes = likes + 1
+        else : 
+            dislikes = dislikes + 1
+    information = {
+        "votes_count" : votes.count(),
+        "likes" : likes , 
+        "dislikes" : dislikes
+        
+
+    }
+    return information
 class MyProjectView(LoginRequiredMixin , generic.View) : 
     login_url = reverse_lazy("login-page")
     redirect_field_name = ""
@@ -62,8 +82,9 @@ class ProjectDetail(LoginRequiredMixin,generic.View) :
     redirect_field_name = ""
     def get(self , request,slug=None) : 
         project = models.Project.objects.filter(slug=slug).first()
+        project_information = project_votes(project=project)
         return render(request , "project_module/detail_project.html" , context={
-             "page_active" : "upload-project" , "project" : project
+             "page_active" : "upload-project" , "project" : project,"project_info" : project_information
         })
 
 
@@ -87,24 +108,7 @@ class ChatProjectView(LoginRequiredMixin,  generic.View) :
         return render(request , "project_module/project_chat.html" , context={
              "page_active" : "my-project"
         })
-# TEST FUNCTION
-def project_votes(project) : 
-    votes = models.Vote.objects.filter(project=project)
-    likes = 0
-    dislikes = 0
-    for vote in votes : 
-        if vote.vote_type == "like" : 
-            likes = likes + 1
-        else : 
-            dislikes = dislikes + 1
-    information = {
-        "votes_count" : votes.count(),
-        "likes" : likes , 
-        "dislikes" : dislikes
-        
 
-    }
-    return information
 # Fetch api -> handling front end with js ("check fetch_vote.js" if there was any bug in this code)
 class SubmitVote(LoginRequiredMixin,generic.View) : 
     login_url = reverse_lazy("login-page")
