@@ -9,3 +9,7 @@ class ProjectAdmin(admin.ModelAdmin) :
 @admin.register(models.Vote) 
 class VoteAdmin(admin.ModelAdmin) : 
     pass 
+
+@admin.register(models.Comment)
+class CommentAdmin(admin.ModelAdmin) : 
+    pass

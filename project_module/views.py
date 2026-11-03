@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.shortcuts import render, redirect , get_object_or_404
+from django.http import JsonResponse,HttpResponseRedirect
 from django.urls import reverse_lazy
-from json import loads
+from json import loads , JSONDecodeError
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import forms
@@ -82,11 +82,23 @@ class ProjectDetail(LoginRequiredMixin,generic.View) :
     redirect_field_name = ""
     def get(self , request,slug=None) : 
         project = models.Project.objects.filter(slug=slug).first()
+        
         project_information = project_votes(project=project)
-        return render(request , "project_module/detail_project.html" , context={
-             "page_active" : "upload-project" , "project" : project,"project_info" : project_information
-        })
+        
+        user = self.request.user
 
+        voted = models.Vote.objects.filter(project=project , user=user).first()
+        user_vote = None
+        if voted : 
+            user_vote = voted.vote_type
+
+        comments = models.Comment.objects.filter(project=project)
+
+        return render(request , "project_module/detail_project.html" , context={
+             "page_active" : "upload-project" , "project" : project,"project_info" : project_information,
+             "user_vote" : user_vote , "comments" : comments
+             
+        })
 
 class AllProjectView(LoginRequiredMixin , generic.View) : 
     login_url = reverse_lazy("login-page")
@@ -98,9 +110,42 @@ class AllProjectView(LoginRequiredMixin , generic.View) :
              "page_active" : "all-project" , "projects" : projects
         })
 
+class SubmitComment(LoginRequiredMixin,generic.View) : 
+    login_url = reverse_lazy("login-page")
 
+    def post(self , request , project_id=None) : 
 
+            project = get_object_or_404(models.Project, id=project_id)
+            
 
+            comment_text = None
+            if request.body:
+                try:
+                    data = loads(request.body.decode('utf-8'))
+                    comment_text = data.get('message') or data.get('comment') or data.get('body')
+                except JSONDecodeError:
+                    return JsonResponse(data={
+                        "status" : "error" , "message": "Decode error in programme "  , 
+                    })
+
+            if not comment_text:
+                comment_text = request.POST.get('message') or request.POST.get('comment') or request.POST.get('body')
+
+            if not comment_text or not str(comment_text).strip():
+                return JsonResponse({'status': 'error', 'message': 'این فیلد نباید خالی باشه'}, status=400)
+
+            comment = models.Comment.objects.create(
+                user=request.user,
+                project=project,
+                message=str(comment_text).strip()
+            )
+
+            return JsonResponse({
+                'status': 'success',
+                'message': 'نظر شما با موفقیت ثبت شد',
+                'comment': comment.message,
+                'author': request.user.username
+            })
 class ChatProjectView(LoginRequiredMixin,  generic.View) : 
     login_url = reverse_lazy("login-page")
     redirect_field_name = ""

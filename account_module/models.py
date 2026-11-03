@@ -33,3 +33,5 @@ class User(AbstractBaseUser , PermissionsMixin ) :
 
         return super().save(*args, **kwargs)
 
+    def get_fullname(self,*args, **kwargs) : 
+        return f"{self.first_name} {self.last_name}"

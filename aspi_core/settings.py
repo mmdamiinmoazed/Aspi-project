@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',"dload_module",
     "django_render_partial" , "rest_framework" , "imagekit" , "django_summernote" , "account_module","project_module"
 ]
 

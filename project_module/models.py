@@ -2,10 +2,20 @@ from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from datetime import datetime
+from django.utils import timezone
 # Create your models here.
 class Comment(models.Model) : 
     # Implement of comment model
-    pass
+    """"""
+    message = models.TextField(max_length=200,null=True)
+    project = models.ForeignKey(to="Project",on_delete=models.CASCADE,null=True)
+    user = models.ForeignKey(get_user_model(),on_delete=models.CASCADE , null=True)
+
+
+    created_at = models.DateTimeField( default=timezone.datetime.now())
+    
+    def __str__(self):
+        return f"{self.message} | user : {self.user} "
 class Vote(models.Model) : 
     VOTE_CHOICE = [
         ("dislike" , 'موافق نیستم'),

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load project_tags %}
+
 {% block content %}
 
     <label for="nav-toggle" class="overlay" aria-hidden="true"></label>
@@ -25,11 +26,13 @@
         <!-- Project header -->
         <section class="card panel project-head">
           <div class="project-head__main">
+
             <h2 class="project-head__title">
 
               {{ project.title }}
           
           </h2>
+          <a href='{% url 'download-link' project.pk %}'>download</a>
           <p> انجام دهنده :  {{ project.performer.first_name }} {{ project.performer.last_name }} </p>
             <p class="muted">دسته‌بندی: {{ project.category }} 
               — تاریخ ارسال: {{ project.created_at|date_changer }}</p>
@@ -50,23 +53,22 @@
         <div class="detail-grid">
           <div class="detail-main">
 <!-- Voting & comments -->
+<!-- Voting & comments -->
 <section class="card panel" aria-labelledby="vote-title">
   <div class="panel__head">
     <h2 id="vote-title" class="panel__title">رأی‌گیری و نظرات</h2>
   </div>
 
-
   <form id="project-vote-form" method="post" action="{% url 'submit-vote' project.id %}">
     {% csrf_token %}
     <div class="vote" role="group" aria-label="رأی به این پروژه">
-      <!-- نوع دکمه به button تغییر داده شد -->
-      <button type="button" class="vote__btn" aria-pressed="false" data-vote="like">
+      <button type="button" class="vote__btn" {% if user_vote == 'like' %} aria-pressed="true" {% else %} aria-pressed="false" {% endif %} data-vote="like">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 2 2v3h6a2 2 0 0 1 2 2l-1 7a2 2 0 0 1-2 2H7"/></svg>
         <span>موافقم</span>
         <strong class="vote__count">{{ project_info.likes }}</strong>
       </button>
 
-      <button type="button" class="vote__btn" aria-pressed="false" data-vote="dislike">
+      <button type="button" class="vote__btn" {% if user_vote == 'dislike' %} aria-pressed="true" {% else %} aria-pressed="false" {% endif %} data-vote="dislike">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 13V4h3v9zM17 13l-4 7a2 2 0 0 1-2-2v-3H5a2 2 0 0 1-2-2l1-7a2 2 0 0 1 2-2h9"/></svg>
         <span>مخالفم</span>
         <strong class="vote__count">{{ project_info.dislikes }}</strong>
@@ -74,48 +76,36 @@
     </div>
   </form>
 
-  <h3 class="sub-title">نظرات اعضا (۴)</h3>
-  <ul class="comments">
-    <li class="comment">
-      <span class="avatar avatar--sm" aria-hidden="true">س</span>
-      <div class="comment__body">
-        <p class="comment__meta"><strong>سارا احمدی</strong> <time class="muted">۲ ساعت پیش</time></p>
-        <p>چیدمان صفحه انتقال وجه خیلی خوب است. فقط دکمه تأیید باید بزرگ‌تر باشد.</p>
-      </div>
-    </li>
-    <li class="comment">
-      <span class="avatar avatar--sm" aria-hidden="true">ع</span>
-      <div class="comment__body">
-        <p class="comment__meta"><strong>علی کریمی</strong> <time class="muted">دیروز</time></p>
-        <p>رنگ‌بندی حالت تیره کنتراست کافی دارد.</p>
-      </div>
-    </li>
-    <li class="comment">
-      <span class="avatar avatar--sm" aria-hidden="true">ن</span>
-      <div class="comment__body">
-        <p class="comment__meta"><strong>نرگس موسوی</strong> <time class="muted">۲ روز پیش</time></p>
-        <p>تاریخچه تراکنش‌ها به نظر شلوغ می‌آید. فیلتر تاریخ لازم است.</p>
-      </div>
-    </li>
-    <li class="comment">
-      <span class="avatar avatar--sm" aria-hidden="true">ر</span>
-      <div class="comment__body">
-        <p class="comment__meta"><strong>رضا تهرانی</strong> <time class="muted">۳ روز پیش</time></p>
-        <p>نسخه موبایل عالی است.</p>
-      </div>
-    </li>
-  </ul>
+  <h3 class="sub-title">نظرات اعضا {% if comments %} ({{ comments.count }}) {% endif %}</h3>
+ 
+  {% if comments %}
+    <ul class="comments">
+      {% for comment in comments %}
+      <li class="comment">
+        <span class="avatar avatar--sm" aria-hidden="true">س</span>
+        <div class="comment__body">
+          <p class="comment__meta"><strong>{{ comment.user.get_fullname }}</strong> <time class="muted">{{ comment.created_at|date_changer }}</time></p>
+          <p>{{ comment.message }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>اولین نفری باشید که برای این پروژه نظر می‌دهید.</p>
+  {% endif %}
 
-  <form class="form comment-form" novalidate>
+  <!-- فرم نظردهی اصلاح شده -->
+  <form class="form comment-form" method="post" id="project-comment-form" action="{% url 'submit-comment' project.id %}">
+    {% csrf_token %}
     <div class="field">
       <label for="comment">نظر شما</label>
-      <textarea class="input" id="comment" name="comment" rows="3" maxlength="300" placeholder="نظر خود را درباره این پروژه بنویسید…"></textarea>
+      <p id="comment-error" style="color: #e74c3c; font-size: 0.85rem; margin-top: 6px; display: none;"></p>
+      <textarea class="input" id="comment-text" name="comment-text" rows="3" maxlength="300" placeholder="نظر خود را درباره این پروژه بنویسید…" required></textarea>
     </div>
     <div class="actions">
-      <button type="submit" class="btn btn--sm">ثبت نظر</button>
+      <button type="submit" id="comment-submit-btn" class="btn btn--sm">ثبت نظر</button>
     </div>
   </form>
-</section>
 
 <!-- اسکریپت اختصاصی برای دریافت و ارسال دیتا -->
 

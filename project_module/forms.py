@@ -36,3 +36,5 @@ class ProjectModelForm(forms.ModelForm) :
         fields = [
             "title" , "category" , "project_file" , "description"
         ]
+
+
